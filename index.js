@@ -2,25 +2,24 @@ const mergeImages = require('merge-images-v2');
 const fs = require('fs');
 const Canvas = require('canvas');
 // const { MakeMinty } = require('./minty');
-const {traits} = require('./consts');
-// const axios = require('axios');
+const { traits } = require('./consts');
 
 function shuffle(array) {
-  var currentIndex = array.length,  randomIndex;
+	var currentIndex = array.length, randomIndex;
 
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
+	// While there remain elements to shuffle...
+	while (currentIndex != 0) {
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
 
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
-  }
+		// And swap it with the current element.
+		[array[currentIndex], array[randomIndex]] = [
+			array[randomIndex], array[currentIndex]];
+	}
 
-  return array;
+	return array;
 }
 
 async function generateRandomImages() {
@@ -32,7 +31,7 @@ async function generateRandomImages() {
 				total.val[total.len++] = idx;
 			}
 			return total;
-		}, {val: [], len: 0}).val)
+		}, { val: [], len: 0 }).val)
 	}));
 
 	// let minty = await MakeMinty();
@@ -48,28 +47,28 @@ async function generateRandomImages() {
 		}));
 
 		let imgs2merge = selectTrait.map(trait => (prefix + trait.path));
-		
-		let imagePath = __dirname + `/nft/${i+1}.png`;
+
+		let imagePath = __dirname + `/nft/${i + 1}.png`;
 		await mergeImages(imgs2merge, {
 			Canvas: Canvas
 		}).then(img => {
 			var base64Data = img.replace(/^data:image\/png;base64,/, "");
 			const buf = new Buffer(base64Data, 'base64').toString('binary');
 			fs.writeFileSync(imagePath, buf, 'binary');
-			console.log(`${i+1}.png created`);
+			console.log(`${i + 1}.png created`);
 		});
 		let description = selectTrait[2].description;
 		if (selectTrait[1].value.startsWith("Rotten"))
 			description += (" " + selectTrait[1].description);
 		const metaData = {
-			token_id: i+1,
-			name: `TheHexagon #${i+1}`,
+			token_id: i + 1,
+			name: `TheHexagon #${i + 1}`,
 			description: description,
 			// path: imagePath,
 			attributes: selectTrait
 		}
 		// const nft = await minty.createNFTFromAssetFile(imagePath, metaData);
-		const metafile = __dirname + `/metadata/${i+1}`;
+		const metafile = __dirname + `/metadata/${i + 1}`;
 		fs.writeFileSync(metafile, JSON.stringify(metaData), 'utf-8');
 		// console.log(nft);
 	}
