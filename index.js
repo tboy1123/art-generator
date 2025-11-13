@@ -1,7 +1,6 @@
 const mergeImages = require('merge-images-v2');
 const fs = require('fs');
 const Canvas = require('canvas');
-// const { MakeMinty } = require('./minty');
 const { traits } = require('./consts');
 
 function shuffle(array) {
