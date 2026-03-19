@@ -69,7 +69,7 @@ async function generateRandomImages() {
 		// const nft = await minty.createNFTFromAssetFile(imagePath, metaData);
 		const metafile = __dirname + `/metadata/${i + 1}`;
 		fs.writeFileSync(metafile, JSON.stringify(metaData), 'utf-8');
-		// console.log(nft);
+		console.log(nft);
 	}
 	// const meta = await minty.createMetaDataIPFS(__dirname+'/metadata');
 	// console.log(meta);
